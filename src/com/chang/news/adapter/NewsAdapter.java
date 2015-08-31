@@ -3,7 +3,6 @@ package com.chang.news.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 import com.chang.news.model.NewsBeam;
-import com.chang.news.util.NewImageLoader;
-import com.chang.news.util.NewImageLoader.ImageCallback;
+import com.chang.news.util.BitmapCache;
 import com.imooc.tab03.R;
 
 public class NewsAdapter extends BaseAdapter
@@ -24,20 +27,19 @@ public class NewsAdapter extends BaseAdapter
 
 	public static String[] URLS;
 
-	private NewImageLoader newImageLoader;
 	ListView listView;
+	
+	RequestQueue mQueue;
+	ImageLoader imageLoader;
+	ImageListener listener;
 
 	public NewsAdapter(Context context, List<NewsBeam> data, ListView listView)
 	{
 		mList = data;
 		this.listView = listView;
 		mInflater = LayoutInflater.from(context);
-		newImageLoader = new NewImageLoader();
-		URLS = new String[data.size()];
-		for(int i = 0; i < data.size(); i++)
-		{
-			URLS[i] = data.get(i).newsIconUrl;
-		}
+		mQueue = Volley.newRequestQueue(context);
+		imageLoader = new ImageLoader(mQueue, new BitmapCache());
 	}
 
 	@Override
@@ -66,38 +68,24 @@ public class NewsAdapter extends BaseAdapter
 		{
 			viewHolder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.item_layout, null);
-			viewHolder.icon = (ImageView) convertView.findViewById(R.id.id_icon);
+			viewHolder.icon = (NetworkImageView) convertView.findViewById(R.id.id_icon);
 			viewHolder.title = (TextView) convertView.findViewById(R.id.id_title);
 			viewHolder.content = (TextView) convertView.findViewById(R.id.id_content);
 			viewHolder.time = (TextView) convertView.findViewById(R.id.id_time);
 			convertView.setTag(viewHolder);
+			
 		}
 		else
 		{
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
-		viewHolder.icon.setImageResource(R.drawable.ic_launcher);
+		
 		String url = mList.get(position).newsIconUrl;
-		if (url.equals("")) {
+		if ("".equals(url) || url==null) {
 			viewHolder.icon.setVisibility(View.GONE);
 		} else {
 			viewHolder.icon.setVisibility(View.VISIBLE);
-			viewHolder.icon.setTag(url);
-			
-			Bitmap cacheDrawable = newImageLoader.loadDrawable(url, new ImageCallback(){
-
-				@Override
-				public void imageLoaded(Bitmap imageDrawable, String imageUrl) {
-					// TODO Auto-generated method stub
-					 ImageView imageViewByTag = (ImageView) listView.findViewWithTag(imageUrl);  
-		                if (imageViewByTag != null) {  
-		                    imageViewByTag.setImageBitmap(imageDrawable);  
-		                }  
-				}
-				
-			});
-			
-			viewHolder.icon.setImageBitmap(cacheDrawable);
+			((NetworkImageView) viewHolder.icon).setImageUrl(url,imageLoader); 
 		}
 		
 		viewHolder.title.setText(mList.get(position).newsTitle);

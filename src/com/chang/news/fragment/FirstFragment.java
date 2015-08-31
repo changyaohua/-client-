@@ -75,7 +75,7 @@ public class FirstFragment extends Fragment implements OnItemClickListener {
 
 	protected void initUrlPath() {
 		// TODO Auto-generated method stub
-		urlPath = "http://192.168.207.26:8080/HongTaiNewsService/HongTaiNoticeServlet?pageNo=";
+		urlPath = "http://115.159.63.146:8080/HongTaiNewsService/HongTaiNoticeServlet?pageNo=";
 		type = "最要通知";
 	}
 
@@ -99,7 +99,7 @@ public class FirstFragment extends Fragment implements OnItemClickListener {
 			public void onRefresh() {
 
 				try {
-					Thread.sleep(3000);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

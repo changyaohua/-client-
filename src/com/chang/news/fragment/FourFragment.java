@@ -197,7 +197,7 @@ public class FourFragment extends Fragment implements OnItemClickListener
 
 				newsBeam.newsTime = childJsonObject.getString("time");
 				newsBeam.newsTitle = childJsonObject.getString("title");
-				newsBeam.newsIconUrl = childJsonObject.optString("picUrl");
+				newsBeam.newsIconUrl = childJsonObject.getString("picUrl");
 				newsBeam.newsContent = childJsonObject.getString("description");
 				newsBeam.newsUrl = childJsonObject.getString("url");
 				tempList.add(newsBeam);
@@ -302,9 +302,8 @@ public class FourFragment extends Fragment implements OnItemClickListener
 					newsBeam = new NewsBeam();
 					newsBeam.newsTime = childJsonObject.getString("time");
 					newsBeam.newsTitle = childJsonObject.getString("title");
-					newsBeam.newsIconUrl = childJsonObject.optString("picUrl");
-					newsBeam.newsContent = childJsonObject
-							.getString("description");
+					newsBeam.newsIconUrl = childJsonObject.getString("picUrl");
+					newsBeam.newsContent = childJsonObject.getString("description");
 					newsBeam.newsUrl = childJsonObject.getString("url");
 					newsBeamsList.add(newsBeam);
 				}

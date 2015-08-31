@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.chang.news.model.NoticeBeam;
 import com.imooc.tab03.R;
 
@@ -35,6 +36,8 @@ public class ClientNewsActivity extends Activity {
 	private String author;
 	private String time;
 	private Spanned desc;
+	
+	ImageLoader imageLoader;
 	
 	public Handler mHandler = new Handler();
 
@@ -143,12 +146,13 @@ public class ClientNewsActivity extends Activity {
 				return null;
 			}
 			DisplayMetrics dm = getResources().getDisplayMetrics();  
-			int dwidth = dm.widthPixels-10;//padding left + padding right
+			int dwidth = dm.widthPixels / 10 * 9;//padding left + padding right
 			int wid = dwidth;
 			float dheight = (float)drawable.getIntrinsicHeight()*(float)dwidth/(float)drawable.getIntrinsicWidth();
-			int dh = (int)(dheight+0.5);
+			int dh = (int)(dheight);
 			int hei = dh;
-			drawable.setBounds(0, 0, wid, hei);
+			int left = dm.widthPixels / 20;
+			drawable.setBounds(left, 0, wid, hei);
 //			mHandler.post(new Runnable() {
 //				
 //				@Override
