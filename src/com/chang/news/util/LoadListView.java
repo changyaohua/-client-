@@ -8,7 +8,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
-import com.imooc.tab03.R;
+import com.chang.news.R;
 
 
 public class LoadListView extends ListView implements OnScrollListener {

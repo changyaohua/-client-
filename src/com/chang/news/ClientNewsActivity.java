@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.chang.news.model.NoticeBeam;
-import com.imooc.tab03.R;
+import com.chang.news.R;
 
 public class ClientNewsActivity extends Activity {
 	private TextView noticeTitle;

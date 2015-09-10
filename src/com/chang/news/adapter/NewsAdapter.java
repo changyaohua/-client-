@@ -18,7 +18,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.chang.news.model.NewsBeam;
 import com.chang.news.util.BitmapCache;
-import com.imooc.tab03.R;
+import com.chang.news.R;
 
 public class NewsAdapter extends BaseAdapter
 {

@@ -1,24 +1,16 @@
 package com.chang.news.fragment;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -36,18 +28,20 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.chang.news.ClientNewsActivity;
-import com.chang.news.adapter.NewsAdapter;
+import com.chang.news.R;
 import com.chang.news.adapter.NoticeAdapter;
-import com.chang.news.model.NewsBeam;
 import com.chang.news.model.NoticeBeam;
 import com.chang.news.util.HttpUtil;
 import com.chang.news.util.RefreshableView;
 import com.chang.news.util.RefreshableView.PullToRefreshListener;
-import com.imooc.tab03.R;
 
 public class FirstFragment extends Fragment implements OnItemClickListener {
 	String urlPath;
 	String type;
+	/*
+	 * 当前所在的fragment页面位置
+	 */
+	int currPagePotion;
 	
 	ProgressBar progressBar;
 	RefreshableView refreshableView;
@@ -77,6 +71,7 @@ public class FirstFragment extends Fragment implements OnItemClickListener {
 		// TODO Auto-generated method stub
 		urlPath = "http://115.159.63.146:8080/HongTaiNewsService/HongTaiNoticeServlet?pageNo=";
 		type = "最要通知";
+		currPagePotion = 1;
 	}
 
 	@Override
@@ -206,7 +201,7 @@ public class FirstFragment extends Fragment implements OnItemClickListener {
 		protected void onPostExecute(List<NoticeBeam> newsBeams) {
 			super.onPostExecute(newsBeams);
 			noticeList = newsBeams;
-			adapter = new NoticeAdapter(getActivity(), noticeList);
+			adapter = new NoticeAdapter(getActivity(), noticeList, currPagePotion);
 			listView.setAdapter(adapter);
 			progressBar.setVisibility(View.GONE);
 		}

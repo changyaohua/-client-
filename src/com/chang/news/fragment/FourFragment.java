@@ -33,7 +33,7 @@ import com.chang.news.model.NewsBeam;
 import com.chang.news.util.HttpUtil;
 import com.chang.news.util.RefreshableView;
 import com.chang.news.util.RefreshableView.PullToRefreshListener;
-import com.imooc.tab03.R;
+import com.chang.news.R;
 
 public class FourFragment extends Fragment implements OnItemClickListener
 {

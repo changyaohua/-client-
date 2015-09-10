@@ -11,7 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.imooc.tab03.R;
+import com.chang.news.R;
 
 public class BrowseNewsActivity extends Activity {
 

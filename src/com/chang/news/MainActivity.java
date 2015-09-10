@@ -20,7 +20,7 @@ import com.chang.news.fragment.ThreeFragment;
 import com.chang.news.fragment.SecondFragment;
 import com.chang.news.fragment.FourFragment;
 import com.chang.news.fragment.FirstFragment;
-import com.imooc.tab03.R;
+import com.chang.news.R;
 
 public class MainActivity extends FragmentActivity implements OnClickListener
 {
