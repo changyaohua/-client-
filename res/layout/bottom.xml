@@ -96,7 +96,7 @@
             android:id="@+id/id_tab_news_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="国际新闻"
+            android:text="讲座预告"
             android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             android:textColor="#ffffff" />

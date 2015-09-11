@@ -69,7 +69,8 @@ public class FirstFragment extends Fragment implements OnItemClickListener {
 
 	protected void initUrlPath() {
 		// TODO Auto-generated method stub
-		urlPath = "http://115.159.63.146:8080/HongTaiNewsService/HongTaiNoticeServlet?pageNo=";
+//		urlPath = "http://192.168.207.26:8080/HongTaiNewsService/HongTaiNoticeServlet?pageNo=";
+		urlPath = "http://115.159.63.146:8080/NewsService/HongTaiNoticeServlet?pageNo=";
 		type = "最要通知";
 		currPagePotion = 1;
 	}

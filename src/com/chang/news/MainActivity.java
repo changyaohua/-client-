@@ -16,6 +16,7 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chang.news.fragment.FiveFragment;
 import com.chang.news.fragment.ThreeFragment;
 import com.chang.news.fragment.SecondFragment;
 import com.chang.news.fragment.FourFragment;
@@ -79,7 +80,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener
 		Fragment mTab01 = new FirstFragment();
 		Fragment mTab02 = new SecondFragment();
 		Fragment mTab03 = new ThreeFragment();
-		Fragment mTab04 = new FourFragment();
+		Fragment mTab04 = new FiveFragment();
 		
 		mFragments.add(mTab01);
 		mFragments.add(mTab02);

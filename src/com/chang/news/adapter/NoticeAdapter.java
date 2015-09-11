@@ -95,6 +95,10 @@ public class NoticeAdapter extends BaseAdapter
 			case 3:
 				topHolder.top_img.setImageResource(R.drawable.notify_top3);
 				break;
+				
+			case 4:
+				topHolder.top_img.setImageResource(R.drawable.notify_top4);
+				break;
 			}
 		} else {
 			if(convertView == null)
