@@ -16,12 +16,10 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.chang.news.fragment.FiveFragment;
-import com.chang.news.fragment.ThreeFragment;
-import com.chang.news.fragment.SecondFragment;
-import com.chang.news.fragment.FourFragment;
 import com.chang.news.fragment.FirstFragment;
-import com.chang.news.R;
+import com.chang.news.fragment.FiveFragment;
+import com.chang.news.fragment.SecondFragment;
+import com.chang.news.fragment.ThreeFragment;
 
 public class MainActivity extends FragmentActivity implements OnClickListener
 {
@@ -54,6 +52,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener
 		initView();
 		
 		setSelect(0);
+		
 	}
 
 	
@@ -176,19 +175,19 @@ public class MainActivity extends FragmentActivity implements OnClickListener
 		{
 		case 0:
 			mViewInform.setVisibility(View.VISIBLE);
-			mTextViewInform.setTextColor(Color.parseColor("#4D4DFF"));
+			mTextViewInform.setTextColor(Color.parseColor("#1E90FF"));
 			break;
 		case 1:
 			mViewPhychology.setVisibility(View.VISIBLE);
-			mTextViewPhychology.setTextColor(Color.parseColor("#4D4DFF"));
+			mTextViewPhychology.setTextColor(Color.parseColor("#1E90FF"));
 			break;
 		case 2:
 			mViewLecture.setVisibility(View.VISIBLE);
-			mTextViewLecture.setTextColor(Color.parseColor("#4D4DFF"));
+			mTextViewLecture.setTextColor(Color.parseColor("#1E90FF"));
 			break;
 		case 3:
 			mViewNews.setVisibility(View.VISIBLE);
-			mTextViewNews.setTextColor(Color.parseColor("#4D4DFF"));
+			mTextViewNews.setTextColor(Color.parseColor("#1E90FF"));
 			break;
 		}
 	}

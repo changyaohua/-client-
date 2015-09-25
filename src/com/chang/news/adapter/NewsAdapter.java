@@ -64,6 +64,7 @@ public class NewsAdapter extends BaseAdapter
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		ViewHolder viewHolder;
+		NewsBeam newsBeam = mList.get(position);
 		if(convertView == null)
 		{
 			viewHolder = new ViewHolder();
@@ -80,7 +81,7 @@ public class NewsAdapter extends BaseAdapter
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 		
-		String url = mList.get(position).newsIconUrl;
+		String url = newsBeam.newsIconUrl;
 		if ("".equals(url) || url==null) {
 			viewHolder.icon.setVisibility(View.GONE);
 		} else {
@@ -88,9 +89,9 @@ public class NewsAdapter extends BaseAdapter
 			((NetworkImageView) viewHolder.icon).setImageUrl(url,imageLoader); 
 		}
 		
-		viewHolder.title.setText(mList.get(position).newsTitle);
-		viewHolder.content.setText(mList.get(position).newsContent);
-		viewHolder.time.setText(mList.get(position).newsTime);
+		viewHolder.title.setText(newsBeam.newsTitle);
+		viewHolder.content.setText(newsBeam.newsContent);
+		viewHolder.time.setText(newsBeam.newsTime);
 		return convertView;
 	}
 

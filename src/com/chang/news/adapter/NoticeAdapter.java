@@ -83,6 +83,7 @@ public class NoticeAdapter extends BaseAdapter
 				topHolder = (TopHolder) convertView.getTag();
 			}
 			topHolder.title.setText(mList.get(position).getTitle());
+			topHolder.title.getBackground().setAlpha(150);
 			switch (CurrPage) {
 			case 1:
 				topHolder.top_img.setImageResource(R.drawable.notice_top1);

@@ -8,7 +8,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,9 +23,8 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.chang.news.model.NoticeBeam;
-import com.chang.news.R;
 
-public class ClientNewsActivity extends Activity {
+public class ClientNewsActivity extends SlideBackActivity {
 	private TextView noticeTitle;
 	private TextView noticeAuthor;
 	private TextView noticeTime;
@@ -82,7 +80,7 @@ public class ClientNewsActivity extends Activity {
 		protected String doInBackground(String... params) {
 
 			try {
-				doc = Jsoup.connect(params[0]).get();
+				doc = Jsoup.connect(params[0]).timeout(100000).get();
 				Document content = Jsoup.parse(doc.toString());
 				Element elementContent = content.getElementById("vsb_content");
 				if (elementContent == null) {
