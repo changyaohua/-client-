@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 import com.chang.news.BrowseNewsActivity;
 import com.chang.news.adapter.NewsAdapter;
-import com.chang.news.model.NewsBeam;
+import com.chang.news.bean.NewsBean;
 import com.chang.news.util.HttpUtil;
 import com.chang.news.util.RefreshableView;
 import com.chang.news.util.RefreshableView.PullToRefreshListener;
@@ -43,7 +43,7 @@ public class FourFragment extends Fragment implements OnItemClickListener
 	RefreshableView refreshableView;
 	ListView listView;
 
-	List<NewsBeam> newsBeamsList;
+	List<NewsBean> newsBeamsList;
 	NewsAdapter adapter;
 	View view;
 
@@ -79,7 +79,7 @@ public class FourFragment extends Fragment implements OnItemClickListener
 					e.printStackTrace();
 				}
 
-				List<NewsBeam> tempList = getJsonData(urlPath, "" + initPage);
+				List<NewsBean> tempList = getJsonData(urlPath, "" + initPage);
 
 				String currDate = newsBeamsList.get(0).newsTime;
 				String newsDate = tempList.get(0).newsTime;
@@ -94,8 +94,8 @@ public class FourFragment extends Fragment implements OnItemClickListener
 					});
 
 				} else {
-					List<NewsBeam> mList = new ArrayList<NewsBeam>();
-					for (NewsBeam newsBeam : tempList) {
+					List<NewsBean> mList = new ArrayList<NewsBean>();
+					for (NewsBean newsBeam : tempList) {
 						if (currDate.equals(newsBeam.newsTime)) {
 							break;
 						} else {
@@ -123,7 +123,7 @@ public class FourFragment extends Fragment implements OnItemClickListener
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
-						List<NewsBeam> mlist = getJsonData(urlPath, ""
+						List<NewsBean> mlist = getJsonData(urlPath, ""
 								+ currPage);
 						if (mlist.size() == 0) {
 							Toast.makeText(getActivity(), "已更多消息",
@@ -166,7 +166,7 @@ public class FourFragment extends Fragment implements OnItemClickListener
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
 		// TODO Auto-generated method stub
-		NewsBeam news = newsBeamsList.get(position);
+		NewsBean news = newsBeamsList.get(position);
 		Intent intent = new Intent(getActivity(), BrowseNewsActivity.class);
 		intent.putExtra("content_url", news.newsUrl);
 		startActivity(intent);
@@ -178,8 +178,8 @@ public class FourFragment extends Fragment implements OnItemClickListener
 	 * @param url
 	 * @return
 	 */
-	public List<NewsBeam> getJsonData(String url, String page) {
-		List<NewsBeam> tempList = new ArrayList<NewsBeam>();
+	public List<NewsBean> getJsonData(String url, String page) {
+		List<NewsBean> tempList = new ArrayList<NewsBean>();
 		String httpUrl = url;
 		String httpArg = "num=10&page=" + page;
 
@@ -188,12 +188,12 @@ public class FourFragment extends Fragment implements OnItemClickListener
 
 			JSONObject jsonObject;
 			JSONObject childJsonObject;
-			NewsBeam newsBeam;
+			NewsBean newsBeam;
 
 			jsonObject = new JSONObject(jsonString);
 			for (int i = 0; i < 10; i++) {
 				childJsonObject = jsonObject.getJSONObject("" + i);
-				newsBeam = new NewsBeam();
+				newsBeam = new NewsBean();
 
 				newsBeam.newsTime = childJsonObject.getString("time");
 				newsBeam.newsTitle = childJsonObject.getString("title");
@@ -248,7 +248,7 @@ public class FourFragment extends Fragment implements OnItemClickListener
 	/**
 	 * 实现网络的异步访问
 	 */
-	class NewAsyncTask extends AsyncTask<String, Void, List<NewsBeam>> {
+	class NewAsyncTask extends AsyncTask<String, Void, List<NewsBean>> {
 		// ProgressDialog progressDialog;
 		@Override
 		protected void onPreExecute() {
@@ -265,12 +265,12 @@ public class FourFragment extends Fragment implements OnItemClickListener
 		}
 
 		@Override
-		protected List<NewsBeam> doInBackground(String... params) {
+		protected List<NewsBean> doInBackground(String... params) {
 			return getJsonData(params[0], params[1]);
 		}
 
 		@Override
-		protected void onPostExecute(List<NewsBeam> newsBeams) {
+		protected void onPostExecute(List<NewsBean> newsBeams) {
 			super.onPostExecute(newsBeams);
 			adapter = new NewsAdapter(getActivity(), newsBeams, listView);
 			listView.setAdapter(adapter);
@@ -284,8 +284,8 @@ public class FourFragment extends Fragment implements OnItemClickListener
 		 * @param url
 		 * @return
 		 */
-		public List<NewsBeam> getJsonData(String url, String page) {
-			newsBeamsList = new ArrayList<NewsBeam>();
+		public List<NewsBean> getJsonData(String url, String page) {
+			newsBeamsList = new ArrayList<NewsBean>();
 			String httpUrl = url;
 			String httpArg = "num=10&page=" + page;
 
@@ -294,12 +294,12 @@ public class FourFragment extends Fragment implements OnItemClickListener
 
 				JSONObject jsonObject;
 				JSONObject childJsonObject;
-				NewsBeam newsBeam;
+				NewsBean newsBeam;
 
 				jsonObject = new JSONObject(jsonString);
 				for (int i = 0; i < 10; i++) {
 					childJsonObject = jsonObject.getJSONObject("" + i);
-					newsBeam = new NewsBeam();
+					newsBeam = new NewsBean();
 					newsBeam.newsTime = childJsonObject.getString("time");
 					newsBeam.newsTitle = childJsonObject.getString("title");
 					newsBeam.newsIconUrl = childJsonObject.getString("picUrl");

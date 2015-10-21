@@ -22,7 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.chang.news.model.NoticeBeam;
+import com.chang.news.bean.NoticeBean;
+import com.chang.news.ui.SlideBackActivity;
 
 public class ClientNewsActivity extends SlideBackActivity {
 	private TextView noticeTitle;
@@ -46,9 +47,10 @@ public class ClientNewsActivity extends SlideBackActivity {
 		setContentView(R.layout.activity_client_news);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayShowHomeEnabled(false);
 		initView();
 		setTitle(getIntent().getStringExtra("type"));
-		NoticeBeam news = (NoticeBeam) getIntent().getSerializableExtra("news");
+		NoticeBean news = (NoticeBean) getIntent().getSerializableExtra("news");
 		this.noticeTitle.setText(news.getTitle());
 		String contentUrl = news.getUrl();
 		new LoadHtml().execute(contentUrl);
@@ -151,16 +153,6 @@ public class ClientNewsActivity extends SlideBackActivity {
 			int hei = dh;
 			int left = dm.widthPixels / 20;
 			drawable.setBounds(left, 0, wid, hei);
-//			mHandler.post(new Runnable() {
-//				
-//				@Override
-//				public void run() {
-//					
-//					mTextView.requestLayout();  
-//		            mTextView.setText(mTextView.getText()); // 解决图文重叠  
-//				}
-//			});
-			
             
 			return drawable;
         }  

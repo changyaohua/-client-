@@ -39,7 +39,7 @@ public class LoadListView extends ListView implements OnScrollListener {
 	 */
 	public void initView(Context context) {
 		LayoutInflater inflater = LayoutInflater.from(context);
-		footer = inflater.inflate(R.layout.footer_layout, null);
+		footer = inflater.inflate(R.layout.layout_footer, null);
 		footer.findViewById(R.id.load_layout).setVisibility(View.GONE);
 		this.addFooterView(footer);
 		this.setOnScrollListener(this);

@@ -1,9 +1,9 @@
-package com.chang.news.model;
+package com.chang.news.bean;
 
 /**
  * Created by YUMI on 2015/7/3.
  */
-public class NewsBeam
+public class NewsBean
 {
 	public String newsIconUrl;
 	public String newsTitle;

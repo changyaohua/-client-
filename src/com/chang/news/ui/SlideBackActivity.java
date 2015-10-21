@@ -1,4 +1,4 @@
-package com.chang.news;
+package com.chang.news.ui;
 
 import android.app.Activity;
 import android.view.MotionEvent;

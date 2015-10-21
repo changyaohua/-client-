@@ -1,16 +1,7 @@
 package com.chang.news.fragment;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -28,9 +19,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.chang.news.ClientNewsActivity;
+import com.chang.news.NetErrorActivity;
 import com.chang.news.R;
 import com.chang.news.adapter.NoticeAdapter;
-import com.chang.news.model.NoticeBeam;
+import com.chang.news.bean.NoticeBean;
+import com.chang.news.util.GetNoticeJsonData;
 import com.chang.news.util.HttpUtil;
 import com.chang.news.util.RefreshableView;
 import com.chang.news.util.RefreshableView.PullToRefreshListener;
@@ -38,11 +31,8 @@ import com.chang.news.util.RefreshableView.PullToRefreshListener;
 public class FirstFragment extends Fragment implements OnItemClickListener {
 	String urlPath;
 	String type;
-	/*
-	 * 当前所在的fragment页面位置
-	 */
-	int currPagePotion;
-	
+	int currPage;
+
 	ProgressBar progressBar;
 	RefreshableView refreshableView;
 	ListView listView;
@@ -53,26 +43,25 @@ public class FirstFragment extends Fragment implements OnItemClickListener {
 	boolean mHasLoadedOnce = false;
 
 	int currPageNo = 1;
-	
+
 	NewAsyncTask asyncTask;
 
-	List<NoticeBeam> noticeList;
+	List<NoticeBean> noticeList;
 
 	Handler handler = new Handler();
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		initUrlPath();
 	}
 
 	protected void initUrlPath() {
-		// TODO Auto-generated method stub
-//		urlPath = "http://192.168.207.26:8080/HongTaiNewsService/HongTaiNoticeServlet?pageNo=";
-		urlPath = "http://115.159.63.146:8080/NewsService/HongTaiNoticeServlet?pageNo=";
-		type = "最要通知";
-		currPagePotion = 1;
+		// urlPath =
+		// "http://192.168.207.26:8080/HongTaiNewsService/HongTaiNoticeServlet?pageNo=";
+		urlPath = "http://www.changyaohua.com:8080/NewsService/HongTaiNoticeServlet?pageNo=";
+		type = "重要通知";
+		currPage = 1;
 	}
 
 	@Override
@@ -83,26 +72,25 @@ public class FirstFragment extends Fragment implements OnItemClickListener {
 		refreshableView = (RefreshableView) view
 				.findViewById(R.id.refreshable_view);
 		listView = (ListView) view.findViewById(R.id.list_view);
-		noticeList = new ArrayList<NoticeBeam>();
+		noticeList = new ArrayList<NoticeBean>();
 
 		this.listView.setOnItemClickListener(this);
-		
+
 		asyncTask = new NewAsyncTask();
 		asyncTask.execute("" + currPageNo);
 
 		refreshableView.setOnRefreshListener(new PullToRefreshListener() {
 			@Override
 			public void onRefresh() {
-
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
-				List<NoticeBeam> tempList = asyncTask.getJsonData("-1");
-				
+				List<NoticeBean> tempList = GetNoticeJsonData.getJsonData(
+						urlPath, "-1");
+
 				if (tempList == null || tempList.size() == 0) {
 					handler.post(new Runnable() {
 						@Override
@@ -112,30 +100,51 @@ public class FirstFragment extends Fragment implements OnItemClickListener {
 						}
 					});
 				} else {
-					NoticeBeam currDate = noticeList.get(0);
-					List<NoticeBeam> mList = new ArrayList<NoticeBeam>();
-					for (NoticeBeam newsBeam : tempList) {
-						if (currDate.equals(newsBeam.getUrl())) {
+					String currDateUrl = noticeList.get(0).getUrl();
+					List<NoticeBean> mList = new ArrayList<NoticeBean>();
+					for (NoticeBean newsBeam : tempList) {
+						if (currDateUrl.equals(newsBeam.getUrl())) {
 							break;
 						} else {
 							mList.add(newsBeam);
 						}
 					}
-
-					noticeList.addAll(0, mList);
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							adapter.notifyDataSetChanged();
-						}
-					});
+					if (mList.size() == 0) {
+						handler.post(new Runnable() {
+							@Override
+							public void run() {
+								Toast.makeText(getActivity(), "暂无新消息",
+										Toast.LENGTH_SHORT).show();
+							}
+						});
+					} else {
+						noticeList.addAll(0, mList);
+						final int updateNum = mList.size();
+						handler.post(new Runnable() {
+							@Override
+							public void run() {
+								Toast.makeText(getActivity(),
+										"新更新" + updateNum + "条消息",
+										Toast.LENGTH_SHORT).show();
+								adapter.notifyDataSetChanged();
+							}
+						});
+					}
 				}
-				
+
 				refreshableView.finishRefreshing();
 			}
 
 			@Override
 			public void onLoad() {
+				if (!HttpUtil.isNetworkStatusOK(getActivity())) {
+
+					Toast.makeText(getActivity(), "当前网络不可用！",
+							Toast.LENGTH_SHORT).show();
+					getActivity().finish();
+					startActivity(new Intent(getActivity(),
+							NetErrorActivity.class));
+				}
 				new Thread(new Runnable() {
 
 					@Override
@@ -143,12 +152,12 @@ public class FirstFragment extends Fragment implements OnItemClickListener {
 						try {
 							Thread.sleep(1500);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						currPageNo++;
 						Log.d("currPageNo", "" + currPageNo);
-						List<NoticeBeam> mlist =  asyncTask.getJsonData("" + currPageNo);
+						List<NoticeBean> mlist = GetNoticeJsonData.getJsonData(
+								urlPath, "" + currPageNo);
 						if (mlist == null) {
 							handler.post(new Runnable() {
 								@Override
@@ -172,120 +181,61 @@ public class FirstFragment extends Fragment implements OnItemClickListener {
 					}
 				}).start();
 			}
-		}, 0);
+		}, currPage);
 
 		return view;
 	}
 
-	class NewAsyncTask extends AsyncTask<String, Void, List<NoticeBeam>> {
-		// ProgressDialog progressDialog;
+	class NewAsyncTask extends AsyncTask<String, Void, List<NoticeBean>> {
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-			if (!HttpUtil.isNetworkStatusOK(getActivity())) {
-				progressBar.setVisibility(View.VISIBLE);
-			} else {
-				Toast.makeText(getActivity(), "当前网络不可用！",
-						Toast.LENGTH_SHORT).show();
-				this.cancel(true);
-			}
+			progressBar.setVisibility(View.VISIBLE);
 
 		}
 
 		@Override
-		protected List<NoticeBeam> doInBackground(String... params) {
-			return getJsonData(params[0]);
+		protected List<NoticeBean> doInBackground(String... params) {
+			return GetNoticeJsonData.getJsonData(urlPath, params[0]);
 		}
 
 		@Override
-		protected void onPostExecute(List<NoticeBeam> newsBeams) {
+		protected void onPostExecute(List<NoticeBean> newsBeams) {
 			super.onPostExecute(newsBeams);
 			noticeList = newsBeams;
-			adapter = new NoticeAdapter(getActivity(), noticeList, currPagePotion);
+			adapter = new NoticeAdapter(noticeList);
 			listView.setAdapter(adapter);
 			progressBar.setVisibility(View.GONE);
 		}
 
-		/**
-		 * 从 URL 中获取数据
-		 * 
-		 * @param url
-		 * @return
-		 */
-		public List<NoticeBeam> getJsonData(String pageNo) {
-			String httpUrl = urlPath + pageNo;
-			List<NoticeBeam> tempList = null;
-			try {
-				String jsonString = request(httpUrl);
-				
-				JSONArray jsonArray;
-				JSONObject jsonObject;
-				NoticeBeam noticeBeam;
-				jsonArray = new JSONArray(jsonString);
-				tempList = new ArrayList<NoticeBeam>();
-				for (int i = 0; i < jsonArray.length(); i++) {
-					jsonObject = (JSONObject)jsonArray.get(i);
-					noticeBeam = new NoticeBeam();
-					noticeBeam.setTitle(jsonObject.getString("title"));
-					noticeBeam.setTime(jsonObject.getString("time"));
-					noticeBeam.setUrl(jsonObject.getString("url"));
-					tempList.add(noticeBeam);
-				}
-
-			} catch (JSONException e) {
-				return null;
-			}
-			return tempList;
-		}
-
-
-		/**
-		 * @param urlAll
-		 *            :请求接口
-		 * @param httpArg
-		 *            :参数
-		 * @return 返回结果
-		 */
-		public String request(String httpUrl) {
-			BufferedReader reader = null;
-			String result = null;
-			StringBuffer sbf = new StringBuffer();
-			try {
-				URL url = new URL(httpUrl);
-				HttpURLConnection connection = (HttpURLConnection) url
-						.openConnection();
-				connection.setRequestMethod("GET");
-				connection.connect();
-				InputStream is = connection.getInputStream();
-				reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-				String strRead = null;
-				while ((strRead = reader.readLine()) != null) {
-					sbf.append(strRead);
-					sbf.append("\r\n");
-				}
-				reader.close();
-				result = sbf.toString();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return result;
-		}
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-		
-		NoticeBeam temp = noticeList.get(position);
-		
-		Intent intent= new Intent(getActivity(),ClientNewsActivity.class);
-		NoticeBeam news = new NoticeBeam();
-		news.setTitle(temp.getTitle());
-		news.setTime("time");
-		news.setUrl(temp.getUrl());
-		intent.putExtra("news",news);
-		intent.putExtra("type", type);
-		startActivity(intent);
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+			long arg3) {
+
+		if (HttpUtil.isNetworkStatusOK(getActivity())) {
+
+			NoticeBean temp = noticeList.get(position);
+
+			Intent intent = new Intent(getActivity(), ClientNewsActivity.class);
+			NoticeBean news = new NoticeBean();
+			news.setTitle(temp.getTitle());
+			news.setTime("time");
+			news.setUrl(temp.getUrl());
+			intent.putExtra("news", news);
+			intent.putExtra("type", type);
+			startActivity(intent);
+
+		} else {
+			Toast.makeText(getActivity(), "当前网络不可用！", Toast.LENGTH_SHORT)
+					.show();
+			getActivity().finish();
+			startActivity(new Intent(getActivity(), NetErrorActivity.class));
+
+		}
+
 	}
 
 }

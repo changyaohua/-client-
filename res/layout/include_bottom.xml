@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hsc_lable"
+    android:scrollbars="none"
+    android:layout_width="match_parent"
+    android:layout_height="45dp" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottom_bar"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="4" >
+
+        <LinearLayout
+            android:id="@+id/id_tab_inform"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/id_tab_inform_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="重要通知"
+                android:textColor="#ffffff" />
+
+            <View
+                android:id="@+id/id_tab_inform_view"
+                android:layout_width="80dp"
+                android:layout_height="5dp"
+                android:background="#034695"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_psychology"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/id_tab_psychology_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:text="工作动态"
+                android:textColor="#ffffff" />
+
+            <View
+                android:id="@+id/id_tab_psychology_view"
+                android:layout_width="80dp"
+                android:layout_height="5dp"
+                android:layout_gravity="bottom"
+                android:background="#034695"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_tab_lecture"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/id_tab_lecture_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:text="学院新闻"
+                android:textColor="#ffffff" />
+
+            <View
+                android:id="@+id/id_tab_lecture_view"
+                android:layout_width="80dp"
+                android:layout_height="5dp"
+                android:background="#034695"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_tab_advance"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/id_tab_advance_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:text="讲座预告"
+                android:textColor="#ffffff" />
+
+            <View
+                android:id="@+id/id_tab_advance_view"
+                android:layout_width="80dp"
+                android:layout_height="5dp"
+                android:background="#034695"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_tab_news"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/id_tab_news_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:text="中北新闻"
+                android:textColor="#ffffff" />
+
+            <View
+                android:id="@+id/id_tab_news_view"
+                android:layout_width="80dp"
+                android:layout_height="5dp"
+                android:background="#034695"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_tab_job"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/id_tab_job_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:text="校内招聘"
+                android:textColor="#ffffff" />
+
+            <View
+                android:id="@+id/id_tab_job_view"
+                android:layout_width="80dp"
+                android:layout_height="5dp"
+                android:background="#034695"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</HorizontalScrollView>

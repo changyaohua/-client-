@@ -1,4 +1,4 @@
-package com.chang.news;
+package com.chang.news.ui;
 
 import android.content.Context;
 import android.os.AsyncTask;

@@ -4,9 +4,24 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="15dp"
     android:background="#FFFFFF"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="10dp" >
-
+    
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/notic_image"
+        android:layout_width="120dp"
+    	android:layout_height="120dp"
+    	android:padding="1dp"
+    	android:src="@drawable/picture_load_failure"
+        />
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_gravity="center_vertical"
+    	android:padding="10dp"
+        android:orientation="vertical">
+		
     <TextView
         android:id="@+id/notice_title"
         android:layout_width="match_parent"
@@ -16,17 +31,17 @@
         android:textColor="#000000"
         android:textSize="18sp" />
 
-    
     <TextView
         android:id="@+id/notice_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="#87CEFA"
         android:padding="3dp"
         android:text="time"
-        android:layout_gravity="right"
         android:textColor="#FFFFFF"
-        android:background="#87CEFA"
         android:textSize="12sp" />
 
+</LinearLayout>
 
 </LinearLayout>

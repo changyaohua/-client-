@@ -1,8 +1,8 @@
-package com.chang.news.model;
+package com.chang.news.bean;
 
 import java.io.Serializable;
 
-public class NoticeBeam implements Serializable{
+public class NoticeBean implements Serializable{
 	/**
 	 * 
 	 */
@@ -10,6 +10,7 @@ public class NoticeBeam implements Serializable{
 	private String title;
 	private String time;
 	private String url;
+	private String image;
 	public String getTitle() {
 		return title;
 	}
@@ -29,6 +30,12 @@ public class NoticeBeam implements Serializable{
 		this.url = url;
 	}
 	
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

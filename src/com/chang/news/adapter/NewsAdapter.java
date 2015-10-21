@@ -16,13 +16,13 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-import com.chang.news.model.NewsBeam;
+import com.chang.news.bean.NewsBean;
 import com.chang.news.util.BitmapCache;
 import com.chang.news.R;
 
 public class NewsAdapter extends BaseAdapter
 {
-	private List<NewsBeam> mList;
+	private List<NewsBean> mList;
 	private LayoutInflater mInflater;
 
 	public static String[] URLS;
@@ -33,7 +33,7 @@ public class NewsAdapter extends BaseAdapter
 	ImageLoader imageLoader;
 	ImageListener listener;
 
-	public NewsAdapter(Context context, List<NewsBeam> data, ListView listView)
+	public NewsAdapter(Context context, List<NewsBean> data, ListView listView)
 	{
 		mList = data;
 		this.listView = listView;
@@ -64,7 +64,7 @@ public class NewsAdapter extends BaseAdapter
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		ViewHolder viewHolder;
-		NewsBeam newsBeam = mList.get(position);
+		NewsBean newsBeam = mList.get(position);
 		if(convertView == null)
 		{
 			viewHolder = new ViewHolder();

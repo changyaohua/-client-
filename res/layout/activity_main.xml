@@ -4,9 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include layout="@layout/top" />
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        layout="@layout/include_top_news" />
 
-    <include layout="@layout/bottom" />
+    <include layout="@layout/include_bottom" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/id_viewpager"
